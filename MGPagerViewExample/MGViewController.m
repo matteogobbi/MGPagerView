@@ -19,16 +19,33 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 	
-	MGPagerView *pagerView = [[MGPagerView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+	MGPagerView *pagerView = [[MGPagerView alloc] initWithFrame:CGRectMake(0, 10, 320, 558)];
 	pagerView.delegate = self;
 	pagerView.datasource = self;
 	[self.view addSubview:pagerView];
 }
 
-- (void)didReceiveMemoryWarning
+- (NSUInteger)numberOfPageInPagerView:(MGPagerView *)pagerView
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+	return 5;
+}
+
+- (NSString *)pagerView:(MGPagerView *)pagerView titleForRowAtIndex:(NSUInteger)index
+{
+	switch (index) {
+		case 0:
+			return @"Posts";
+		case 1:
+			return @"Messages";
+		case 2:
+			return @"Notifies";
+		case 3:
+			return @"Profile";
+		case 4:
+			return @"Settings";
+		default:
+			return @"";
+	}
 }
 
 @end
