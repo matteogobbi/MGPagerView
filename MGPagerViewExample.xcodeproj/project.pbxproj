@@ -22,6 +22,7 @@
 		84A372C8197FC46E00A2B91E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A372A7197FC46E00A2B91E /* UIKit.framework */; };
 		84A372D0197FC46E00A2B91E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84A372CE197FC46E00A2B91E /* InfoPlist.strings */; };
 		84A372D2197FC46E00A2B91E /* MGPagerViewExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A372D1197FC46E00A2B91E /* MGPagerViewExampleTests.m */; };
+		84A372E2197FD66000A2B91E /* MGPagerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A372E1197FD66000A2B91E /* MGPagerView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,8 @@
 		84A372CD197FC46E00A2B91E /* MGPagerViewExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MGPagerViewExampleTests-Info.plist"; sourceTree = "<group>"; };
 		84A372CF197FC46E00A2B91E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		84A372D1197FC46E00A2B91E /* MGPagerViewExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MGPagerViewExampleTests.m; sourceTree = "<group>"; };
+		84A372E0197FD66000A2B91E /* MGPagerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGPagerView.h; sourceTree = "<group>"; };
+		84A372E1197FD66000A2B91E /* MGPagerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGPagerView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +117,7 @@
 		84A372A9197FC46E00A2B91E /* MGPagerViewExample */ = {
 			isa = PBXGroup;
 			children = (
+				84A372DF197FD66000A2B91E /* MGPagerView */,
 				84A372B2197FC46E00A2B91E /* MGAppDelegate.h */,
 				84A372B3197FC46E00A2B91E /* MGAppDelegate.m */,
 				84A372B5197FC46E00A2B91E /* Main_iPhone.storyboard */,
@@ -153,6 +157,15 @@
 				84A372CE197FC46E00A2B91E /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		84A372DF197FD66000A2B91E /* MGPagerView */ = {
+			isa = PBXGroup;
+			children = (
+				84A372E0197FD66000A2B91E /* MGPagerView.h */,
+				84A372E1197FD66000A2B91E /* MGPagerView.m */,
+			);
+			path = MGPagerView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,6 +269,7 @@
 			files = (
 				84A372B4197FC46E00A2B91E /* MGAppDelegate.m in Sources */,
 				84A372BD197FC46E00A2B91E /* MGViewController.m in Sources */,
+				84A372E2197FD66000A2B91E /* MGPagerView.m in Sources */,
 				84A372B0197FC46E00A2B91E /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
