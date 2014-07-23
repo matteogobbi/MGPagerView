@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class MGPagerView;
+
 #pragma mark - Delegate protocol
 @protocol MGPagerViewDelegate <NSObject>
 
@@ -15,6 +17,11 @@
 
 #pragma mark - Datasource protocol
 @protocol MGPagerViewDatasource <NSObject>
+
+- (NSUInteger)numberOfPageInPagerView:(MGPagerView *)pagerView;
+- (UIView *)pagerView:(MGPagerView *)pagerView viewForPageAtIndex:(NSUInteger)index;
+- (UIView *)pagerView:(MGPagerView *)pagerView titleForRowAtIndex:(NSUInteger)index;
+- (UIView *)pagerView:(MGPagerView *)pagerView fontForTitleAtIndex:(NSUInteger)index;
 
 @end
 
