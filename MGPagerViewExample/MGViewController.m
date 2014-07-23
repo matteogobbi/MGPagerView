@@ -7,7 +7,6 @@
 //
 
 #import "MGViewController.h"
-#import "MGPagerView.h"
 
 @interface MGViewController ()
 
@@ -21,8 +20,8 @@
 	// Do any additional setup after loading the view, typically from a nib.
 	
 	MGPagerView *pagerView = [[MGPagerView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-	//pagerView.delegate = self;
-	//pagerView.dataSource = self;
+	pagerView.delegate = self;
+	pagerView.datasource = self;
 	[self.view addSubview:pagerView];
 }
 

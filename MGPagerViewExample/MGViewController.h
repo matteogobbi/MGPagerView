@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MGPagerView.h"
 
-@interface MGViewController : UIViewController
+@interface MGViewController : UIViewController <MGPagerViewDelegate, MGPagerViewDatasource>
 
 @end

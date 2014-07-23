@@ -9,6 +9,7 @@
 #import "MGPagerView.h"
 
 CGFloat kMGPagerViewTitlesViewHeight = 40.0;
+CGFloat kMGPagerViewTitlesMargin = 15.0;
 
 @interface MGPagerView ()
 
@@ -17,7 +18,11 @@ CGFloat kMGPagerViewTitlesViewHeight = 40.0;
 
 @end
 
-@implementation MGPagerView
+@implementation MGPagerView {
+	NSUInteger _numberOfPage;
+	NSMutableArray *_arrPageViews;
+	NSMutableArray *_arrTitles;
+}
 
 #pragma mark - Class and overriding methods
 - (instancetype)initWithFrame:(CGRect)frame
@@ -26,6 +31,9 @@ CGFloat kMGPagerViewTitlesViewHeight = 40.0;
 	
     self = [super initWithFrame:frame];
     if (self) {
+		
+		//Exposed for the customer
+		_titlesViewHeight = kMGPagerViewTitlesViewHeight;
 		
 		//Init frames
         _titlesScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(frame.origin.x,
@@ -38,27 +46,68 @@ CGFloat kMGPagerViewTitlesViewHeight = 40.0;
 																		  _titlesScrollView.frame.size.width,
 																		  frame.size.height-_titlesScrollView.frame.size.height)];
 		
-		_titlesViewBackgroundColor = _pagesViewBackgroundColor = _pagesScrollView.backgroundColor = _titlesScrollView.backgroundColor = [UIColor whiteColor];
 		
 		[self addSubview:_titlesScrollView];
 		[self addSubview:_pagesScrollView];
+		
+		[self mg_setDefaultValue];
     }
     return self;
 }
 
-- (void)layoutSubviews {
+- (void)layoutSubviews
+{
 	[super layoutSubviews];
 	[self mg_loadData];
 }
 
 
 #pragma mark - Private methods
-- (void)mg_loadData {
-	[self mg_clearDataIfNeeded];
+- (void)mg_setDefaultValue {
+	_titlesViewBackgroundColor = _pagesViewBackgroundColor = _pagesScrollView.backgroundColor = _titlesScrollView.backgroundColor = [UIColor whiteColor];
+	_titlesFont = [UIFont fontWithName:@"Verdana" size:16.0];
+	_titlesColor = [UIColor colorWithRed:0 green:.3 blue:1.0 alpha:.6];
+	_selectedTitleColor = [UIColor colorWithRed:0 green:.3 blue:1.0 alpha:1.0];
+	_selectedPageIndex = 0;
 }
 
-- (void)mg_clearDataIfNeeded {
-#warning to implement
+- (void)mg_loadData
+{
+	_numberOfPage = [self.datasource numberOfPageInPagerView:self];
+	
+	[self mg_setupTitleScrollView];
+	[self mg_setupPagesScrollView];
+}
+
+- (void)mg_resetData
+{
+	_selectedPageIndex = 0;
+	_numberOfPage = 0;
+	_arrPageViews = nil;
+	_arrTitles = nil;
+	
+#warning remove view from scrollViews
+}
+
+- (void)mg_setupTitleScrollView
+{
+	_arrTitles = [[NSMutableArray alloc] initWithCapacity:_numberOfPage];
+	
+	for (NSUInteger i = 0; i < _numberOfPage; ++i) {
+		NSString *title = [self.datasource pagerView:self titleForRowAtIndex:i];
+	}
+}
+
+- (void)mg_setupPagesScrollView
+{
+	
+}
+
+#pragma mark - Public methods
+- (void)reloadData
+{
+	[self mg_resetData];
+	[self mg_loadData];
 }
 
 @end
