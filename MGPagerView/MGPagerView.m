@@ -12,7 +12,7 @@ CGFloat kMGPagerViewTitlesViewHeight = 50.0;
 
 static const CGFloat kMGPagerViewTitlesMargin = 8.0;
 
-@interface MGPagerView ()
+@interface MGPagerView () <UIScrollViewDelegate>
 
 @property (strong, nonatomic) UIScrollView *titlesScrollView;
 @property (strong, nonatomic) UIScrollView *pagesScrollView;
@@ -69,8 +69,11 @@ static const CGFloat kMGPagerViewTitlesMargin = 8.0;
 - (void)mg_setDefaultValue
 {
     _titlesScrollView.showsHorizontalScrollIndicator = NO;
+    _titlesScrollView.delegate = self;
+    
     _pagesScrollView.showsHorizontalScrollIndicator = NO;
     _pagesScrollView.pagingEnabled = YES;
+    _pagesScrollView.delegate = self;
     
 	_titlesViewBackgroundColor = _pagesViewBackgroundColor = _pagesScrollView.backgroundColor = _titlesScrollView.backgroundColor = [UIColor whiteColor];
 	_titlesFont = [UIFont fontWithName:@"BanglaSangamMN" size:35];
@@ -155,7 +158,22 @@ static const CGFloat kMGPagerViewTitlesMargin = 8.0;
 	[self mg_loadData];
 }
 
-
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    NSLog(@"%1.2f", _pagesScrollView.contentOffset.x);
+    
+    NSUInteger index = _pagesScrollView.contentOffset.x/_pagesScrollView.frame.size.width;
+    
+    UILabel *labelTitle = _arrTitleLabels[index];
+    CGFloat titleWidth = labelTitle.frame.size.width;
+    
+    CGFloat scale = _pagesScrollView.frame.size.width/titleWidth;
+    
+    CGFloat relativeOffet = _pagesScrollView.contentOffset.x - index*_pagesScrollView.frame.size.width;
+    
+    _titlesScrollView.contentOffset = CGPointMake(labelTitle.frame.origin.x + relativeOffet/scale, 0);
+}
 
 
 @end
