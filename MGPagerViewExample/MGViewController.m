@@ -48,4 +48,31 @@
 	}
 }
 
+- (UIView *)pagerView:(MGPagerView *)pagerView viewForPageAtIndex:(NSUInteger)index
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, pagerView.frame.size.width, pagerView.frame.size.height-kMGPagerViewTitlesViewHeight)];
+    
+    switch (index) {
+        case 0:
+            view.backgroundColor = [UIColor redColor];
+            break;
+        case 1:
+            view.backgroundColor = [UIColor yellowColor];
+            break;
+        case 2:
+            view.backgroundColor = [UIColor cyanColor];
+            break;
+        case 3:
+            view.backgroundColor = [UIColor blueColor];
+            break;
+        case 4:
+            view.backgroundColor = [UIColor orangeColor];
+            break;
+        default:
+            break;
+    }
+    
+    return view;
+}
+
 @end

@@ -8,8 +8,9 @@
 
 #import "MGPagerView.h"
 
-CGFloat kMGPagerViewTitlesViewHeight = 40.0;
-CGFloat kMGPagerViewTitlesMargin = 25.0;
+CGFloat kMGPagerViewTitlesViewHeight = 50.0;
+
+static const CGFloat kMGPagerViewTitlesMargin = 8.0;
 
 @interface MGPagerView ()
 
@@ -22,7 +23,7 @@ CGFloat kMGPagerViewTitlesMargin = 25.0;
 @implementation MGPagerView {
 	NSUInteger _numberOfPage;
 	NSMutableArray *_arrPageViews;
-	NSMutableArray *_arrTitleButtons;
+	NSMutableArray *_arrTitleLabels;
 }
 
 #pragma mark - Class and overriding methods
@@ -36,9 +37,6 @@ CGFloat kMGPagerViewTitlesMargin = 25.0;
 	
     self = [super initWithFrame:frame];
     if (self) {
-		
-		//Exposed for the customer
-		_titlesViewHeight = kMGPagerViewTitlesViewHeight;
 		
 		//Init frames
         _titlesScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(frame.origin.x,
@@ -70,10 +68,14 @@ CGFloat kMGPagerViewTitlesMargin = 25.0;
 #pragma mark - Private methods
 - (void)mg_setDefaultValue
 {
+    _titlesScrollView.showsHorizontalScrollIndicator = NO;
+    _pagesScrollView.showsHorizontalScrollIndicator = NO;
+    _pagesScrollView.pagingEnabled = YES;
+    
 	_titlesViewBackgroundColor = _pagesViewBackgroundColor = _pagesScrollView.backgroundColor = _titlesScrollView.backgroundColor = [UIColor whiteColor];
-	_titlesFont = [UIFont fontWithName:@"HelveticaNeue" size:16];
-	_titlesColor = [UIColor colorWithRed:0 green:.3 blue:1.0 alpha:.6];
-	_selectedTitleColor = [UIColor colorWithRed:0 green:.3 blue:1.0 alpha:1.0];
+	_titlesFont = [UIFont fontWithName:@"BanglaSangamMN" size:35];
+	_titlesColor = [UIColor colorWithRed:0 green:.6 blue:1.0 alpha:.4];
+	_selectedTitleColor = [UIColor colorWithRed:0 green:.6 blue:1.0 alpha:1.0];
 	_selectedPageIndex = 0;
 }
 
@@ -90,36 +92,36 @@ CGFloat kMGPagerViewTitlesMargin = 25.0;
 	_selectedPageIndex = 0;
 	_numberOfPage = 0;
 	_arrPageViews = nil;
-	_arrTitleButtons = nil;
+	_arrTitleLabels = nil;
 	
 #warning remove view from scrollViews
 }
 
 - (void)mg_setupTitleScrollView
 {
-	_arrTitleButtons = [[NSMutableArray alloc] initWithCapacity:_numberOfPage];
+	_arrTitleLabels = [[NSMutableArray alloc] initWithCapacity:_numberOfPage];
 	
 	CGFloat nextPosX = 0;
 	for (NSUInteger i = 0; i < _numberOfPage; ++i) {
 		//Get the title
-		NSString *title = [self.datasource pagerView:self titleForRowAtIndex:i];
+		NSString *title = [@" " stringByAppendingString:[self.datasource pagerView:self titleForRowAtIndex:i]];
 		//Calculate the width
 		CGSize titleSize = [title sizeWithAttributes:@{
 													   NSFontAttributeName : _titlesFont
 													   }];
-		//Add a new Button in the scrollView
-		UIButton *buttonTitle = [[UIButton alloc] initWithFrame:CGRectMake(nextPosX, 0, titleSize.width + kMGPagerViewTitlesMargin, _titlesScrollView.frame.size.height)];
-		[buttonTitle setTitle:title forState:UIControlStateNormal];
-		[buttonTitle setTitleColor:_selectedTitleColor forState:UIControlStateSelected];
-		[buttonTitle setTitleColor:_titlesColor forState:UIControlStateNormal];
-		buttonTitle.selected = (i == 0);
-		
-		[_titlesScrollView addSubview:buttonTitle];
+		//Add a new label in the scrollView
+		UILabel *labelTitle = [[UILabel alloc] initWithFrame:CGRectMake(nextPosX, 0, titleSize.width + kMGPagerViewTitlesMargin, _titlesScrollView.frame.size.height)];
+		labelTitle.text = title;
+		labelTitle.textColor = (i == 0) ? _selectedTitleColor : _titlesColor;
+        labelTitle.font = _titlesFont;
+        
+		[_titlesScrollView addSubview:labelTitle];
+        
 		//Add it in the array
-		[_arrTitleButtons addObject:buttonTitle];
+		[_arrTitleLabels addObject:labelTitle];
 		
 		//Calculate next position
-		nextPosX += (i == _numberOfPage-1) ? 0 : buttonTitle.frame.size.width;
+		nextPosX += (i == _numberOfPage-1) ? 0 : labelTitle.frame.size.width;
 	}
 	
 	//Add the rest of the screen to make the scrollView scrollable until the last title
@@ -130,7 +132,20 @@ CGFloat kMGPagerViewTitlesMargin = 25.0;
 
 - (void)mg_setupPagesScrollView
 {
+    _arrPageViews = [[NSMutableArray alloc] initWithCapacity:_numberOfPage];
 	
+	for (NSUInteger i = 0; i < _numberOfPage; ++i) {
+		//Get the view
+        UIView *view = [self.datasource pagerView:self viewForPageAtIndex:i];
+        
+        view.frame = CGRectMake(i*_pagesScrollView.frame.size.width, 0, _pagesScrollView.frame.size.width, _pagesScrollView.frame.size.height);
+		[_pagesScrollView addSubview:view];
+        
+		//Add it in the array
+		[_arrPageViews addObject:view];
+	}
+	
+	_pagesScrollView.contentSize = CGSizeMake(_numberOfPage*_pagesScrollView.frame.size.width, _pagesScrollView.frame.size.height);
 }
 
 #pragma mark - Public methods
@@ -139,5 +154,8 @@ CGFloat kMGPagerViewTitlesMargin = 25.0;
 	[self mg_resetData];
 	[self mg_loadData];
 }
+
+
+
 
 @end

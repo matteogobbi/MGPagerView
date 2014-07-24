@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>697DA130-DDC4-4DBD-A16D-B1EA81BCC998</string>
+	<key>IDESourceControlProjectName</key>
+	<string>MGPagerViewExample</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>760A7636-114D-4738-8F8A-7514E4450752</key>
+		<string>https://github.com/matteogobbi/MGPagerView.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>MGPagerViewExample.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>760A7636-114D-4738-8F8A-7514E4450752</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/matteogobbi/MGPagerView.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>760A7636-114D-4738-8F8A-7514E4450752</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>760A7636-114D-4738-8F8A-7514E4450752</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MGPagerView</string>
+		</dict>
+	</array>
+</dict>
+</plist>

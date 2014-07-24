@@ -26,15 +26,12 @@
 
 #pragma mark - Var exposed (for inherit classes)
 extern CGFloat kMGPagerViewTitlesViewHeight;
-extern CGFloat kMGPagerViewTitlesMargin;
 
 #pragma mark - MGPagerView Interface
 @interface MGPagerView : UIView
 
 @property (weak, nonatomic) id<MGPagerViewDelegate> delegate;
 @property (weak, nonatomic) id<MGPagerViewDatasource> datasource;
-
-@property (readonly) CGFloat titlesViewHeight;
 
 @property (readonly) NSUInteger selectedPageIndex;
 
