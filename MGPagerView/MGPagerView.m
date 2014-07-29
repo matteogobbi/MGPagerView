@@ -161,18 +161,67 @@ static const CGFloat kMGPagerViewTitlesMargin = 8.0;
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSLog(@"%1.2f", _pagesScrollView.contentOffset.x);
+    //CGFloat contentOffsetX = scrollView.contentOffset.x;
     
+    //Calculate the index
     NSUInteger index = _pagesScrollView.contentOffset.x/_pagesScrollView.frame.size.width;
     
+    //Get the label of the title
     UILabel *labelTitle = _arrTitleLabels[index];
+    //Get the width of the label
     CGFloat titleWidth = labelTitle.frame.size.width;
     
+    //Get the view of the page
+    UIView *pageView = _arrPageViews[index];
+
+    //Calculate the scale
     CGFloat scale = _pagesScrollView.frame.size.width/titleWidth;
     
-    CGFloat relativeOffet = _pagesScrollView.contentOffset.x - index*_pagesScrollView.frame.size.width;
+    //Calculate the relative offset
+    CGFloat relativeOffetX;
+    if(scrollView == _pagesScrollView) {
+        relativeOffetX = scrollView.contentOffset.x - pageView.frame.origin.x;
+
+        //Set async scroll titles scroll view
+        _titlesScrollView.contentOffset = CGPointMake(labelTitle.frame.origin.x + relativeOffetX/scale, 0);
+    } else {
+        
+#warning To review and adjust
+        
+        relativeOffetX = scrollView.contentOffset.x - labelTitle.frame.origin.x;
+        
+        //Get the actual offset of the pagesView
+        CGFloat pagesOffsetX = _pagesScrollView.contentOffset.x - pageView.frame.origin.x;
+        //Calcualate the corrispettive for the titlesView
+        CGFloat titlesOffestX = pagesOffsetX/scale; //This is the scaled offset until now, before consider the new scroll
+        
+        //Get just the new part of the relative offset for the titlesView
+        CGFloat partialOffsetX = relativeOffetX - titlesOffestX; //This is the new scroll part not scaled
+        
+        //Set the offset for the pagesView
+        _pagesScrollView.contentOffset = CGPointMake(_pagesScrollView.contentOffset.x + partialOffsetX, 0);
+        
+        //Set async scroll titles scroll view
+        _titlesScrollView.contentOffset = CGPointMake(labelTitle.frame.origin.x + titlesOffestX + partialOffsetX/scale, 0);
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (scrollView != _titlesScrollView)
+        return;
     
-    _titlesScrollView.contentOffset = CGPointMake(labelTitle.frame.origin.x + relativeOffet/scale, 0);
+    //Paging
+    
+    //Calculate the index
+    CGFloat pagesFactor = _pagesScrollView.contentOffset.x/_pagesScrollView.frame.size.width;
+    NSUInteger index = pagesFactor;
+    
+    CGFloat newOffsetX = _pagesScrollView.frame.size.width * ((index+1 - pagesFactor >= .5) ? index : index+1);
+    
+    [UIView animateWithDuration:.3 animations:^{
+        _pagesScrollView.contentOffset = CGPointMake(newOffsetX, 0);
+    }];
 }
 
 
